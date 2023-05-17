@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>View Student</title>
+
+    <style media="screen">
+    table.redTable {
+border: 2px solid #A40808;
+background-color: #EEE7DB;
+width: 100%;
+text-align: center;
+border-collapse: collapse;
+}
+table.redTable td, table.redTable th {
+border: 1px solid #AAAAAA;
+padding: 3px 2px;
+}
+table.redTable tbody td {
+font-size: 13px;
+}
+table.redTable tr:nth-child(even) {
+background: #F5C8BF;
+}
+table.redTable thead {
+background: #A40808;
+}
+table.redTable thead th {
+font-size: 19px;
+font-weight: bold;
+color: #FFFFFF;
+text-align: center;
+border-left: 2px solid #A40808;
+}
+table.redTable thead th:first-child {
+border-left: none;
+}
+
+table.redTable tfoot {
+font-size: 13px;
+font-weight: bold;
+color: #FFFFFF;
+background: #A40808;
+}
+table.redTable tfoot td {
+font-size: 13px;
+}
+table.redTable tfoot .links {
+text-align: right;
+}
+table.redTable tfoot .links a{
+display: inline-block;
+background: #FFFFFF;
+color: #A40808;
+padding: 2px 8px;
+border-radius: 5px;
+}
+    </style>
+  </head>
+  <body>
+    {% include "library/navbaradmin.html" %}
+    <br>
+    <br>
+    <h3 class="p-3 mb-2 bg-primary text-white" style = 'font-size: 50px;text-align:center;'>Sinh viên đăng kí trong thư viện!</h3>
+
+    {% if students%}
+
+
+<form method="post">
+  {% csrf_token %}
+  <div class="row">
+      <div class="col-auto">
+          <input type="text" class="form-control" placeholder="Keyword" name="keyword"
+              value="{{ keyword|default:''}}">
+      </div>
+      <div class="col-auto">
+          <input type="submit" class="btn btn-primary" value="Search" />
+      </div>
+      </div>
+</form>
+<table class="redTable">
+<thead>
+<tr>
+<th>Tên</th>
+<th>Mã sinh viên</th>
+<th>Ngành</th>
+<th></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td colspan="4">
+<div class="links"></div>
+</td>
+</tr>
+</tfoot>
+<tbody>
+  {% for s in students %}
+    <tr>
+      <td>{{s.get_name}}</td>
+      <td>{{s.enrollment}}</td>
+      <td>{{s.branch}}</td>
+      <td>
+        <a href="delete_student/{{s.enrollment}}" class="btn btn-danger">Xóa</a>
+      </td>
+    </tr>
+
+  {% endfor %}
+</tbody>
+</table>
+{%else%}
+<h1> Không có sinh viên đăng ký trong thư viện</h1>
+{%endif%}
+
+
+
+<br><br><br><br><br><br>
+
+<br><br><br>
+  </body>
+</html>
